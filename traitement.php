@@ -1,22 +1,23 @@
 <?php
 
+$image = htmlspecialchars(trim($_POST['image']));
+$description = htmlspecialchars(trim($_POST['description']));
+$artiste = htmlspecialchars(trim($_POST['artiste']));
+$titre = htmlspecialchars(trim($_POST['titre']));
 
 if
 (
-    empty($_POST['image']) || !filter_var($_POST['image'], FILTER_VALIDATE_URL) ||
-    empty($_POST['description']) || strlen($_POST['description']) < 3 ||
-    empty($_POST['artiste']) ||
-    empty($_POST['titre'])
+    empty($image) || !filter_var($image, FILTER_VALIDATE_URL) ||
+    empty($description) || strlen($description) < 3 ||
+    empty($artiste) ||
+    empty($titre)
 ) {
     header('Location: index.php');
 
 } else {
     include_once ('mysql.php');
 
-    $image = htmlspecialchars($_POST['image']);
-    $description = htmlspecialchars($_POST['description']);
-    $artiste = htmlspecialchars($_POST['artiste']);
-    $titre = htmlspecialchars($_POST['titre']);
+
 
     $requete = 'INSERT INTO oeuvres (titre,artiste,description,urlImage) VALUES (? ,? ,? ,?)';
 
