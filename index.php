@@ -1,15 +1,17 @@
 <?php
 require 'header.php';
-require 'oeuvres.php';
-require_once 'mysql.php';
+require 'mysql.php';
+require 'importData.php';
 
 $getOeuvres = $mysqlClient->prepare('SELECT * FROM oeuvres');
 $getOeuvres->execute();
-$oeuvres = $getOeuvres ->fetchAll();
-
+$oeuvres = $getOeuvres->fetchAll();
+if (!$oeuvres) {
+    $oeuvres = createData($mysqlClient);
+}
 ?>
 <div id="liste-oeuvres">
-    <?php foreach ($oeuvres as $oeuvre):       
+    <?php foreach ($oeuvres as $oeuvre):
         ?>
         <article class="oeuvre">
             <a href="oeuvre.php?id=<?= $oeuvre['id'] ?>">
